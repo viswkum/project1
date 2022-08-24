@@ -1,0 +1,24 @@
+
+---
+ - name: this play for register values
+   hosts: web_servers
+   gather_facts: false
+   tasks:
+   - shell: "bash --version"
+     register: bash_ver
+   - debug: var=bash_ver.stdout.split("\n")[0].split()[3]
+
+###################
+
+
+---
+ - hosts: localhost
+   gather_facts: false
+   tasks:
+   - shell: "bash --version"
+     register: bash_ver
+   - set_fact:
+      bash_version: "{{bash_ver.stdout.split('\n')[0].split()[3]}}"
+      my_value: "bash version"
+   - debug: var=bash_version
+
